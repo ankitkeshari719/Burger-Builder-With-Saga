@@ -5,3 +5,4 @@ export { default as OrderSummary } from "./Burger/OrderSummary/OrderSummary";
 export { default as Modal } from "./UI/Modal/Modal";
 export { default as Toolbar } from "./Navigation/Toolbar/Toolbar";
 export { default as SideDrawer } from "./Navigation/SideDrawer/SideDrawer";
+export { default as Spinner } from "./UI/Spinner/Spinner";
