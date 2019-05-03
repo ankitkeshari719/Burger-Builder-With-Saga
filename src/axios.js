@@ -11,11 +11,11 @@ instance.defaults.headers.post["Content-Type"] = "application/json";
 // Add a request interceptor
 instance.interceptors.request.use(
   request => {
-    console.log("Interceptor Request: ", request);
+    //console.log("Interceptor Request: ", request);
     return request;
   },
   error => {
-    console.log("Request error: ", error);
+    //console.log("Request error: ", error);
     return Promise.reject(error);
   }
 );

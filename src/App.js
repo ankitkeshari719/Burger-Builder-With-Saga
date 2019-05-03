@@ -1,12 +1,17 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import { Layout } from "./components";
-import { BurgerBuilder } from "./containers";
+import { BurgerBuilder, Checkout, Orders } from "./containers";
 
 function App() {
   return (
     <div>
       <Layout>
-        <BurgerBuilder/>
+        <Switch>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/" exact component={BurgerBuilder} />
+        </Switch>
       </Layout>
     </div>
   );

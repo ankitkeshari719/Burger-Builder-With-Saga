@@ -8,7 +8,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
     };
 
     constructor(props) {
-      super(props)
+      super(props);
 
       // Add a request interceptor
       this.reqInterceptor = axios.interceptors.request.use(request => {
@@ -25,11 +25,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
           this.setState({ error: error });
         }
       );
-    }
-
-    componentWillUnmount() {
-      axios.interceptors.request.enject(this.reqInterceptor);
-      axios.interceptors.request.enject(this.resInterceptor);
     }
 
     errorConfiredHandler = () => {
