@@ -23,11 +23,11 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
   response => {
-        console.log("Interceptor Response: ", response);
+    //console.log("Interceptor Response: ", response);
     return response;
   },
   error => {
-    console.log("Response error: ", error);
+    //console.log("Response error: ", error);
     return Promise.reject(error);
   }
 );
