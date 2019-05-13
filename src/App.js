@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Layout } from "./components";
-import { BurgerBuilder, Checkout, Orders } from "./containers";
+import { BurgerBuilder, Checkout, Orders, Auth } from "./containers";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Switch>
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
+          <Route path="/auth" component={Auth} />
           <Route path="/" exact component={BurgerBuilder} />
         </Switch>
       </Layout>

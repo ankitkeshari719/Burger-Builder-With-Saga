@@ -107,7 +107,6 @@ class ContactData extends Component {
     };
 
     this.props.onOrderBurger(order);
-    this.props.history.push("/");
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -153,6 +152,11 @@ class ContactData extends Component {
     if (rules.email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(value).toLowerCase());
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
     }
 
     return isValid;
