@@ -1,64 +1,41 @@
 import * as actionTypes from "../actionTypes/actionTypes";
 import axios from "../../axios";
 
-/**
- * Action to add ingredient
- * @param  ingName {Object}
- * @return
- */
-export const addIngredient = ingName => {
+export const addIngredient = (name) => {
   return {
     type: actionTypes.ADD_INGREDIENT,
-    ingredientName: ingName
+    ingredientName: name
   };
 };
 
-/**
- * Action to remove ingredient
- * @param  ingName {Object}
- * @return
- */
-export const removeIngredient = ingName => {
+export const removeIngredient = (name) => {
   return {
     type: actionTypes.REMOVE_INGREDIENT,
-    ingredientName: ingName
+    ingredientName: name
   };
 };
 
-/**
- * Action to fetch ingredient from server
- * @return
- */
+export const setIngredients = (ingredients) => {
+  return {
+    type: actionTypes.SET_INGREDIENTS,
+    ingredients: ingredients
+  };
+};
+
+export const fetchIngredientsFailed = () => {
+  return {
+    type: actionTypes.FETCH_INGREDIENTS_FAILED
+  };
+};
+
 export const initIngredients = () => {
   return dispatch => {
-    dispatch(fetchIngredientsBegin());
-    axios
-      .get("/ingredients.json")
+    axios.get('/ingredients.json')
       .then(response => {
-        dispatch(fectchIngredientsSuccess(response.data));
+        dispatch(setIngredients(response.data));
       })
       .catch(error => {
-        dispatch(fetchIngredientsFailed(error));
+        dispatch(fetchIngredientsFailed());
       });
   };
 };
-
-function fetchIngredientsBegin() {
-  return {
-    type: actionTypes.FETCH_INGREDIENT_BEGIN
-  };
-}
-
-function fectchIngredientsSuccess(ingredients) {
-  return {
-    type: actionTypes.FETCH_INGREDIENT_SUCCESS,
-    ingredients: ingredients
-  };
-}
-
-function fetchIngredientsFailed(error) {
-  return {
-    type: actionTypes.FETCH_INGREDIENT_FAILED,
-    error: { error }
-  };
-}
