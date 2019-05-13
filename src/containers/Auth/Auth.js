@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Input } from "../../components";
+import { Button, Input, Spinner } from "../../components";
 import classes from "./Auth.css";
 import { auth } from "../../store/actions";
 
@@ -37,7 +37,8 @@ class Auth extends Component {
         valid: false,
         touched: false
       }
-    }
+    },
+    isSignUp: true
   };
 
   inputChangedHandler = (event, controlName) => {
@@ -92,8 +93,15 @@ class Auth extends Component {
     event.preventDefault();
     this.props.onAuth(
       this.state.controls.email.value,
-      this.state.controls.password.value
+      this.state.controls.password.value,
+      this.state.isSignUp
     );
+  };
+
+  switchAuthMode = () => {
+    this.setState(prevState => {
+      return { isSignUp: !prevState.isSignUp };
+    });
   };
 
   render() {
@@ -115,24 +123,46 @@ class Auth extends Component {
       />
     ));
 
+    if (this.props.isLoading) {
+      formElements = <Spinner />;
+    }
+
+    let errorMessage = this.props.isError ? (
+      <p style={{ textAlign: "center", color: "red" }}>
+        {this.props.isError.message}
+      </p>
+    ) : null;
+
     return (
       <div className={classes.Auth}>
+        {errorMessage}
         <form onSubmit={this.submitHandler}>
           {formElements}
           <Button btnType="Success">SUBMIT</Button>
         </form>
+        <Button btnType="Danger" clicked={this.switchAuthMode}>
+          SWITCH TO {this.state.isSignUp ? "SIGNIN" : "SIGNUP"}
+        </Button>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isLoading: state.authReducr.loading,
+    isError: state.authReducr.error
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password) => dispatch(auth(email, password))
+    onAuth: (email, password, isSignUp) =>
+      dispatch(auth(email, password, isSignUp))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Auth);

@@ -4,4 +4,4 @@ export {
   removeIngredient
 } from "./burgerActions";
 export { purchaseBurger, purchaseInit, fetchOrders } from "./orderActions";
-export { auth } from "./AuthAction";
+export { auth, logout } from "./AuthAction";
