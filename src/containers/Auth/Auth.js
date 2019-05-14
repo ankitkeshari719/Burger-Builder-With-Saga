@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { Button, Input, Spinner } from "../../components";
 import classes from "./Auth.css";
-import { auth } from "../../store/actions";
+import { auth, setAuthRedirectPath } from "../../store/actions";
 
 class Auth extends Component {
   state = {
@@ -40,6 +41,12 @@ class Auth extends Component {
     },
     isSignUp: true
   };
+
+  componentDidMount() {
+    if (!this.props.buildingBurger && this.props.authRedirectPath !== "/") {
+      this.props.onSetRedirectPath();
+    }
+  }
 
   inputChangedHandler = (event, controlName) => {
     const updatedControls = {
@@ -133,8 +140,13 @@ class Auth extends Component {
       </p>
     ) : null;
 
+    let authRedirect = this.props.isAuthenticated ? (
+      <Redirect to={this.props.authRedirectPath} />
+    ) : null;
+
     return (
       <div className={classes.Auth}>
+        {authRedirect}
         {errorMessage}
         <form onSubmit={this.submitHandler}>
           {formElements}
@@ -151,14 +163,18 @@ class Auth extends Component {
 const mapStateToProps = state => {
   return {
     isLoading: state.authReducr.loading,
-    isError: state.authReducr.error
+    isError: state.authReducr.error,
+    isAuthenticated: state.authReducr.token !== null,
+    buildingBurger: state.burgerReducr.building,
+    authRedirectPath: state.authReducr.authRedirectPage
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignUp) =>
-      dispatch(auth(email, password, isSignUp))
+      dispatch(auth(email, password, isSignUp)),
+    onSetRedirectPath: () => dispatch(setAuthRedirectPath("/"))
   };
 };
 

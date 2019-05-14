@@ -28,12 +28,13 @@ const buildControls = props => {
         Current Price: <strong>{props.totalPrice.toFixed(2)}</strong>
       </p>
       {ingredientBuildControls}
+
       <button
         className={classes.OrderButton}
         disabled={!props.purchasable}
         onClick={props.orderBurger}
       >
-        ORDER NOW
+        {props.isAuthenticated? "ORDER NOW" : "SIGN IN TO ORDER"}
       </button>
     </div>
   );
