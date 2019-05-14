@@ -8,6 +8,10 @@ import { purchaseBurger } from "../../../store/actions";
 import { updateObject, checkValidity } from "../../../shared/";
 
 class ContactData extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 400);
+  }
+
   state = {
     orderForm: {
       name: {
@@ -43,7 +47,7 @@ class ContactData extends Component {
           required: true,
           minLength: 5,
           maxLenght: 15,
-          isNumeric:true
+          isNumeric: true
         },
         valid: false,
         touched: false
@@ -135,7 +139,6 @@ class ContactData extends Component {
     }
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
-
 
   render() {
     let FormElementsArray = [];
