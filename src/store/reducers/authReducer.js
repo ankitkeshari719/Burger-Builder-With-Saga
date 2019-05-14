@@ -1,5 +1,5 @@
 import * as actionTypes from "../actionTypes/actionTypes";
-import { updateObject } from "../utility";
+import { updateObject } from "../../shared/utility";
 
 const initialState = {
   token: null,
