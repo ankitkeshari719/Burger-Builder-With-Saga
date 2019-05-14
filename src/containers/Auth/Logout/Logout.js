@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Redirect } from "react-router-dom";
 import { logout } from "../../../store/actions";
 
 class Logout extends Component {
   componentDidMount() {
-    this.props.onLogout();
+    this.props.logout();
   }
   render() {
     return <Redirect to="/" />;
@@ -13,9 +14,7 @@ class Logout extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    onLogout: () => dispatch(logout())
-  };
+  return bindActionCreators({ logout }, dispatch);
 };
 
 export default connect(
