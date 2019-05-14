@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Button, Input, Spinner } from "../../components";
 import classes from "./Auth.css";
 import { auth, setAuthRedirectPath } from "../../store/actions";
+import { updateObject, checkValidity } from "../../shared";
 
 class Auth extends Component {
   state = {
@@ -49,52 +50,18 @@ class Auth extends Component {
   }
 
   inputChangedHandler = (event, controlName) => {
-    const updatedControls = {
-      ...this.state.controls,
-      [controlName]: {
-        ...this.state.controls[controlName],
+    const updatedControls = updateObject(this.state.controls, {
+      [controlName]: updateObject(this.state.controls[controlName], {
         value: event.target.value,
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.controls[controlName].validation
         ),
         touched: true
-      }
-    };
-
+      })
+    });
     this.setState({ controls: updatedControls });
   };
-
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (!rules) {
-      return true;
-    }
-    if (rules.required) {
-      isValid = rules.required && value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLenght) {
-      isValid = value.length <= rules.maxLenght && isValid;
-    }
-
-    if (rules.email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(value).toLowerCase());
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
-  }
 
   submitHandler = event => {
     event.preventDefault();

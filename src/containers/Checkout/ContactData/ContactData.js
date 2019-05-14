@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Button, Spinner, Input } from "../../../components";
 import { withErrorHandler } from "../../../hoc";
 import { purchaseBurger } from "../../../store/actions";
+import { updateObject, checkValidity } from "../../../shared/";
 
 class ContactData extends Component {
   state = {
@@ -41,7 +42,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           minLength: 5,
-          maxLenght: 15
+          maxLenght: 15,
+          isNumeric:true
         },
         valid: false,
         touched: false
@@ -111,19 +113,21 @@ class ContactData extends Component {
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = {
-      ...this.state.orderForm
-    };
-    const updatedFormElement = {
-      ...updatedOrderForm[inputIdentifier]
-    };
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      event.target.value,
-      updatedFormElement.validation
+    const updatedFormElement = updateObject(
+      this.state.orderForm[inputIdentifier],
+      {
+        value: event.target.value,
+        touched: true,
+        valid: checkValidity(
+          event.target.value,
+          this.state.orderForm[inputIdentifier].validation
+        )
+      }
     );
-    updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    const updatedOrderForm = updateObject(this.state.orderForm, {
+      [inputIdentifier]: updatedFormElement
+    });
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm) {
@@ -132,36 +136,6 @@ class ContactData extends Component {
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (!rules) {
-      return true;
-    }
-    if (rules.required) {
-      isValid = rules.required && value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLenght) {
-      isValid = value.length <= rules.maxLenght && isValid;
-    }
-
-    if (rules.email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(value).toLowerCase());
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
-  }
 
   render() {
     let FormElementsArray = [];
