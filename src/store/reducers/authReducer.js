@@ -23,6 +23,7 @@ const authSuccess = (state, action) => {
 };
 
 const authFail = (state, action) => {
+  console.log("HI",action.error);
   return updateObject(state, { loading: false, error: action.error });
 };
 
