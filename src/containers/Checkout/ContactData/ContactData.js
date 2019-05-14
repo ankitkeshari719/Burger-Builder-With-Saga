@@ -9,7 +9,7 @@ import { updateObject, checkValidity } from "../../../shared/";
 
 class ContactData extends Component {
   componentDidMount() {
-    window.scrollTo(0, 400);
+    window.scrollTo(0, 600);
   }
 
   state = {
