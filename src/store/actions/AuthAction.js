@@ -66,7 +66,13 @@ export const auth = (email, password, isSignUp) => {
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch(err => {
-        dispatch(authFailed(err.response.data.error));
+        let error = null;
+        if (err.response !== undefined) {
+          error = err.response.data.error;
+        } else {
+          error = { message: "Please enter a valid data!" };
+        }
+        dispatch(authFailed(error));
       });
   };
 };
