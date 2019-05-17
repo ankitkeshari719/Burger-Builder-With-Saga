@@ -9,4 +9,4 @@ export {
   logout,
   setAuthRedirectPath,
   authCheckState
-} from "./AuthAction";
+} from "./authAction";
