@@ -1,5 +1,7 @@
 export {
   initIngredients,
+  setIngredients,
+  fetchIngredientsFailed,
   addIngredient,
   removeIngredient
 } from "./burgerActions";
@@ -10,8 +12,8 @@ export {
   authSuccess,
   authFailed,
   logout,
-  setAuthRedirectPath,
+  logoutSucceed,
   authCheckState,
   checkAuthTimeout,
-  logoutSucceed
+  setAuthRedirectPath
 } from "./authAction";

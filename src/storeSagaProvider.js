@@ -1,7 +1,13 @@
 import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import { BurgerReducer, OrderReducer, AuthReducer, watchAuth } from "./store";
+import {
+  BurgerReducer,
+  OrderReducer,
+  AuthReducer,
+  watchAuth,
+  watchBurger
+} from "./store";
 
 const rootReducer = combineReducers({
   burgerReducr: BurgerReducer,
@@ -22,3 +28,4 @@ export const store = createStore(
 );
 
 sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(watchBurger);
