@@ -1,12 +1,4 @@
 export {
-  initIngredients,
-  setIngredients,
-  fetchIngredientsFailed,
-  addIngredient,
-  removeIngredient
-} from "./burgerActions";
-export { purchaseBurger, purchaseInit, fetchOrders } from "./orderActions";
-export {
   auth,
   authStart,
   authSuccess,
@@ -17,3 +9,21 @@ export {
   checkAuthTimeout,
   setAuthRedirectPath
 } from "./authAction";
+export {
+  initIngredients,
+  setIngredients,
+  fetchIngredientsFailed,
+  addIngredient,
+  removeIngredient
+} from "./burgerActions";
+export {
+  purchaseBurger,
+  purchaseBurgerStart,
+  purchaseBurgerSuccess,
+  purchaseBurgerFail,
+  purchaseInit,
+  fetchOrders,
+  fetchOrdersStart,
+  fetchOrdersSuccess,
+  fetchOrdersFail
+} from "./orderActions";

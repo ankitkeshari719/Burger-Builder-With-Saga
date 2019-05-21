@@ -6,7 +6,8 @@ import {
   OrderReducer,
   AuthReducer,
   watchAuth,
-  watchBurger
+  watchBurger,
+  watchOrder
 } from "./store";
 
 const rootReducer = combineReducers({
@@ -29,3 +30,4 @@ export const store = createStore(
 
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBurger);
+sagaMiddleware.run(watchOrder);
